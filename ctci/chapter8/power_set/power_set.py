@@ -1,4 +1,7 @@
 
+# time: O(n2^n)
+# space: O(2^n)
+
 def power_set(aset):
   """
   Return all subsets of a set.
