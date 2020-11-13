@@ -1,4 +1,7 @@
 
+# time: O(n!)
+# space: O(n!)
+
 def permutations(chars):
   """Find all permutations of a string."""
   size = len(chars)
