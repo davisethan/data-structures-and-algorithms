@@ -1,12 +1,11 @@
 
-# time: O(b)
-# space: O(b)
+# time: O(multiplier)
+# space: O(multiplier)
 
-def multiply(a, b):
+def multiply(multiplicand, multiplier):
   """
-  Write a recursive function to multiply two numbers together
-  without the * operator.
+  Recursivly multiply two factors without * operator.
   """
-  if b == 0:
+  if multiplier == 0:
     return 0
-  return a + multiply(a, b - 1)
+  return multiplicand + multiply(multiplicand, multiplier - 1)
