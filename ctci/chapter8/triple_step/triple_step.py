@@ -1,23 +1,25 @@
 
-# time: O(n)
-# space: O(n)
+# time: O(steps)
+# space: O(steps)
 
-def triple_step(n):
+def triple_step(steps):
   """
-  A child is running up a staircase of n steps with 1, 2, or 3 steps at a time.
-  Find how many ways the child can reach the nth step.
+  A child is running up a staircase of N steps with 1, 2, or 3 steps at a time.
+  Find how many ways the child can reach the Nth step.
   """
-  def triple_step_recur(n, seen):
-    if n < 0:
+  seen = {}
+  return triple_step_recursion(steps, seen)
+
+def triple_step_recursion(steps, seen):
+    if steps < 0:
       return 0
-    elif n == 0:
+    elif steps == 0:
       return 1
     else:
-      if n in seen:
-        return seen[n]
+      if steps in seen:
+        return seen[steps]
       else:
-        seen[n] = triple_step_recur(n - 3, seen) + triple_step_recur(n - 2, seen) + triple_step_recur(n - 1, seen)
-        return seen[n]
-
-  seen = {}
-  return triple_step_recur(n, seen)
+        seen[steps] = triple_step_recursion(steps - 3, seen)
+        seen[steps] += triple_step_recursion(steps - 2, seen)
+        seen[steps] += triple_step_recursion(steps - 1, seen)
+        return seen[steps]

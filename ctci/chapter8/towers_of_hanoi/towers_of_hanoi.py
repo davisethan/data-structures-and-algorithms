@@ -1,45 +1,26 @@
 
 def towers_of_hanoi(towers):
   """Solve towers of hanoi."""
-  orig = 0
-  nbr = 1
-  dest = 2
-  idx = 0
+  origin_tower = 0
+  neighbor_tower = 1
+  destination_tower = 2
+  tower_index = 0
 
-  move(towers, orig, idx, dest, nbr)
+  move_disks(towers, origin_tower, tower_index, destination_tower, neighbor_tower)
 
-
-def move(towers, orig, idx, dest, nbr):
+def move_disks(towers, origin_tower, tower_index, destination_tower, neighbor_tower):
   """Move towers of hanoi disk."""
   # Move upper disks away
-  disks = towers[orig][idx+1:]
+  disks = towers[origin_tower][tower_index + 1:]
   if disks:
-    move(towers, orig, idx+1, nbr, dest)
+    move_disks(towers, origin_tower, tower_index + 1, neighbor_tower, destination_tower)
   
   # Move lower disk
-  towers[dest].append(towers[orig].pop())
+  towers[destination_tower].append(towers[origin_tower].pop())
 
   # Move upper disks back on lower disk
-  if towers[dest][-1]-1 in towers[nbr]:
-    nbr_idx = towers[nbr].index(towers[dest][-1]-1)
-    disks = towers[nbr][nbr_idx:]
+  if towers[destination_tower][-1] - 1 in towers[neighbor_tower]:
+    neighbor_index = towers[neighbor_tower].index(towers[destination_tower][-1] - 1)
+    disks = towers[neighbor_tower][neighbor_index:]
     if disks:
-      move(towers, nbr, nbr_idx, dest, orig)
-
-
-# Tests
-# (input, expected_output)
-cases = [
-  (([1], [], []), ([], [], [1])),
-  (([2, 1], [], []), ([], [], [2, 1])),
-  (([3, 2, 1], [], []), ([], [], [3, 2, 1])),
-  (([4, 3, 2, 1], [], []), ([], [], [4, 3, 2, 1])),
-  (([5, 4, 3, 2, 1], [], []), ([], [], [5, 4, 3, 2, 1])),
-]
-for case in cases:
-  towers = case[0]
-  towers_of_hanoi(towers)
-  
-  actual = towers
-  expected = case[1]
-  assert actual == expected
+      move_disks(towers, neighbor_tower, neighbor_index, destination_tower, origin_tower)
