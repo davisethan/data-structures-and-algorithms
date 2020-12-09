@@ -1,76 +1,91 @@
 from typing import List, Tuple
 
-def solve_maze(maze: List[List[str]], r: int, c: int) -> List[Tuple[int, int]]:
+def solve_maze(
+  maze: List[List[str]],
+  rows: int,
+  columns: int) -> List[Tuple[int, int]]:
   """
-  Solve a maze with r rows and c columns.
+  Solve a maze.
   Start in upper-left and find path to lower-right.
   Can only step right or down.
 
   In:
   maze: Maze to solve.
-  r: Number of rows in maze.
-  c: Number of columns in maze.
+  rows: Number of rows in maze.
+  columns: Number of columns in maze.
 
   Out: Solution path coordinates.
   """
-
-  coord = (0, 0)
-  path, solution = [], []
+  starting_coordinates = (0, 0)
+  current_path = []
+  solution_path = []
 
   # Backtracking step
-  path.append(coord)
-  step(path, solution, maze, r, c)
-  path.pop()
+  current_path.append(starting_coordinates)
+  solve_maze_step(current_path, solution_path, maze, rows, columns)
+  current_path.pop()
 
-  return solution
+  return solution_path
 
-def step(path: List[Tuple[int, int]], solution: List[Tuple[int, int]], maze: List[List[str]], r: int, c: int) -> None:
+def solve_maze_step(
+  current_path: List[Tuple[int, int]],
+  solution_path: List[Tuple[int, int]],
+  maze: List[List[str]],
+  rows: int,
+  columns: int) -> None:
   """
   A coordinate in a maze is a step towards a solution.
 
   In:
   path: Current path towards a solution.
-  solution: Solution of maze.
+  solution: Solution path of maze.
   maze: Maze to solve.
   r: Number of rows in maze.
   c: Number of columns in maze.
   """
-
-  idx = len(path) - 1
+  current_path_last_index = len(current_path) - 1
+  maze_coordinates = current_path[current_path_last_index]
 
   # Solution found
-  if path[idx][0] == r - 1 and path[idx][1] == c - 1:
-    solution.extend(path)
+  if maze_coordinates[0] == rows - 1 and maze_coordinates[1] == columns - 1:
+    solution_path.extend(current_path)
     return
 
   # Illegal coordinate
-  if illegal(path[idx], maze, r, c):
+  if is_illegal(maze_coordinates, maze, rows, columns):
     return
 
   # Step right
-  path.append((path[idx][0], path[idx][1] + 1))
-  step(path, solution, maze, r, c)
-  path.pop()
+  current_path.append((maze_coordinates[0], maze_coordinates[1] + 1))
+  solve_maze_step(current_path, solution_path, maze, rows, columns)
+  current_path.pop()
 
   # Step down
-  path.append((path[idx][0] + 1, path[idx][1]))
-  step(path, solution, maze, r, c)
-  path.pop()
+  current_path.append((maze_coordinates[0] + 1, maze_coordinates[1]))
+  solve_maze_step(current_path, solution_path, maze, rows, columns)
+  current_path.pop()
 
-def illegal(coord: Tuple[int, int], maze: List[List[str]], r: int, c: int) -> bool:
+def is_illegal(
+  coordinates: Tuple[int, int],
+  maze: List[List[str]],
+  rows: int,
+  columns: int) -> bool:
   """
   A coordinate in a maze is illegal.
 
   In:
-  coord: A coordinate in a maze.
+  coordinates: A coordinate in a maze.
   maze: A maze.
-  r: Number of rows in maze.
-  c: Number of columns in maze.
+  rows: Number of rows in maze.
+  columns: Number of columns in maze.
 
   Out: A coordinate in a maze is illegal.
   """
-
-  if coord[0] >= r or coord[1] >= c or maze[coord[0]][coord[1]] != "-":
+  if coordinates[0] >= rows:
     return True
-
-  return False
+  elif coordinates[1] >= columns:
+    return True
+  elif maze[coordinates[0]][coordinates[1]] != "-":
+    return True
+  else:
+    return False
