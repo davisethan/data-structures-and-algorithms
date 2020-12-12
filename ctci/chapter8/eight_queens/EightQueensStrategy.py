@@ -18,6 +18,9 @@ class RecursiveEightQueensStrategy(EightQueensStategy):
         return self.seen_eight_queens
 
     def eight_queens_strategy_step(self):
+        if 0 < len(self._seen_eight_queens):
+            return
+
         if 8 == len(self._player.get_piece_points()):
             seen_eight_queens.add(self._player.get_piece_points())
             return
