@@ -1,0 +1,29 @@
+UML
+---
+
+Board
+- ROWS: int = 8
+- COLUMNS: int = 8
+
+Piece
+- point: Point
++ get_attack_points() -> List[Point]
+
+Player
+- pieces: List[Piece]
++ get_piece_points() -> List[Point]
++ get_all_attack_points() -> List[Point]
+
+Game (Client)
++ initial_placement()
+
+Algorithm
+---------
+
+initial_placement
+    1. If player pieces_points size 8, record piece_points, and return
+    2. Iterate points in board
+    3. If point in player piece_points or point in player all_attack_points, continue
+    4. Give queen at point to player
+    5. Recursion
+    6. Take queen at point from player
