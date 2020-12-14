@@ -1,0 +1,47 @@
+UML
+---
+
+Card
+_ HEART = "Heart"
+_ SPADE = "Spade"
+_ CLUB = "Club"
+_ DIAMOND = "Diamond"
+_ TWO = "2"
+_ THREE = "3"
+...
+_ TEN = "10"
+_ JACK = "Jack"
+_ QUEEN = "Queen"
+_ KING = "King"
+_ ACE = "Ace"
+- suit: HEART | SPADE | CLUB | DIAMOND
+- rank: TWO-TEN | JACK | QUEEN | KING | ACE
+
+Deck
+- cards: Set[Card]
++ shuffle(): None
++ hit(): Card
+
+BlackJack(Deck)
+- holders: Tuple[Holder]
++ Blackjack(player: Player)
+_ play(): None
+- play_round(): None
+- dealer_deals_cards(): None
+- players_make_bets(): None
+- holders_take_turns(): None
+- finish_round()
+
+Holder
+- hand: Set[Card]
++ get_hand_score(): int
++ hit_deck(card: Card): None
++ hand_stand(): None
+
+Player(Holder)
+- name: str
+- pot: int
+- bet: int
++ make_bet(amount: int): None
+
+Dealer(Holder)
