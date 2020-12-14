@@ -5,10 +5,13 @@ class Holder(ABC):
     def __init__(self):
         self._hand = []
 
+    def get_hand(self):
+        return self._hand
+
     def set_hand(self, hand):
         self._hand = hand
 
-    def hit_deck(card):
+    def hit_deck(self, card):
         self._hand.append(card)
 
     def get_hand_score(self):
@@ -58,9 +61,24 @@ class Holder(ABC):
         return hand_score
 
 class Player(Holder):
-    def __init__(self, name, pot):
+    def __init__(self, name = "", pot = 0):
         self._name = name
         self._pot = pot
+        self._bet = 0
+
+    def get_name(self):
+        return self._name
+
+    def get_pot(self):
+        return self._pot
+
+    def get_bet(self):
+        return self._bet
+
+    def add_to_pot(self, amount):
+        self._pot += amount
+
+    def clear_bet(self):
         self._bet = 0
 
     def make_bet(self, amount):
@@ -74,6 +92,8 @@ class Player(Holder):
         self._bet = amount
         self._pot -= self._bet
 
+class Dealer(Holder):
+    pass
 
 class IllegalBetException(Exception):
     pass
