@@ -1,0 +1,21 @@
+UML
+---
+
+ParkingLot
+- parking_spaces: Dict[str, ParkingSpace]
++ park_vehicle(vehicle: Vehicle): str
++ retrieve_vehicle_by_parking_space_id(parking_space_id: str)
+
+ParkingSpace
+- id: str
+- vehicle: Vehicle
+- size: LARGE|MEDIUM|SMALL
+
+Truck(Vehicle)
+- size: LARGE
+
+Van(Vehicle)
+- size: MEDIUM
+
+Car(Vehicle)
+- size: SMALL
