@@ -1,0 +1,17 @@
+UML
+---
+
+Employee
+- id: int
+- busy: bool
++ is_busy(): bool
+
+CallCenterChainOfResponsibility
++ dispatch_call(): int
+
+Director
+- employees: Set[Employee]
+
+Manager(Director)
+
+Respondent(Manager)
