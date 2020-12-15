@@ -1,0 +1,26 @@
+UML
+---
+
+Jukebox
++ take_coins(List[Coin]): None
++ return_coins(): List[Coin]
++ select_track_by_id(str): None
+- bank: Bank
+- music: Music
+
+Bank
+- COST: int
+- List[Coin]
+
+Quarter(Coin)
+_ CENTS: int = 25
+...
+
+Music
+- Dict[str, Track]
+
+Track
+- id: str
+- title: str
+- album: str
+- band: str
